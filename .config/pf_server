@@ -1,0 +1,23 @@
+
+server {
+    listen 80, 5432;
+    server_name  *.elasticbeanstalk.com *.amazonaws.com localhost;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /health-check {
+        access_log off;
+        return 200;
+    }
+
+    location / {
+        include        uwsgi_params;
+        uwsgi_pass     unix:/tmp/pf_server.sock;
+    }
+    location /static/ {
+        alias /srv/pf_server/staticfiles/;
+    }
+    location /media/ {
+        alias /srv/pf_server/media/;
+    }
+
+}
