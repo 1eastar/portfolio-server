@@ -50,17 +50,31 @@ class ExperienceViewSet(viewsets.ModelViewSet):
     queryset = models.Experience.objects.order_by('-update_at')
     serializer_class = serializers.ExperienceSerializer
 
+    pagination_class = None
+
     def perform_create(self, serializer):
         return super().perform_create(serializer)
     
 
-class PhotoTextViewSet(viewsets.ModelViewSet):
+# class PhotoTextViewSet(viewsets.ModelViewSet):
+#     authentication_classes = []
+#     permission_classes = [AllowAny]
+
+#     queryset = models.PhotoText.objects.order_by('-update_at')
+#     serializer_class = serializers.PhotoTextSerializer
+
+#     def perform_create(self, serializer):
+#         return super().perform_create(serializer)
+    
+
+class PhotoTextView(APIView):
     authentication_classes = []
     permission_classes = [AllowAny]
 
-    queryset = models.PhotoText.objects.order_by('-update_at')
-    serializer_class = serializers.PhotoTextSerializer
+    def get(self, request, format=None):
+        experience_id = request.GET['experience_id']
+        experience = models.Experience.objects.get(id=experience_id)
+        phototexts = models.PhotoText.objects.filter(experience=experience).order_by('number')
+        serializer = serializers.PhotoTextSerializer(phototexts, many=True)
+        return  Response(serializer.data, status=status.HTTP_200_OK)
 
-    def perform_create(self, serializer):
-        return super().perform_create(serializer)
-    

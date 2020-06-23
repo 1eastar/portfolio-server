@@ -26,9 +26,9 @@ from rest_framework.authtoken import views
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="pocket_refrigerator",
+      title="portfolio_API_server",
       default_version='v1',
-      description="REST API for pocket refri",
+      description="REST API for web portfolio",
       terms_of_service="https://www.google.com/",
       contact=openapi.Contact(email="ehdwls6703@gmail.com"),
       license=openapi.License(name="BSD License"),

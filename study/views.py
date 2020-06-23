@@ -12,6 +12,7 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthentic
 from rest_framework.authentication import TokenAuthentication, BasicAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
+from rest_framework.filters import SearchFilter
 
 from . import models, serializers
 
@@ -21,8 +22,35 @@ class StudyViewSet(viewsets.ModelViewSet):
     authentication_classes = []
     permission_classes = [AllowAny]
 
-    queryset = models.Study.objects.order_by('-update_at')
+    queryset = models.Study.objects.order_by('-create_at')
     serializer_class = serializers.StudySerializer
+
+    filter_backends = [SearchFilter]
+    search_fields = ['title']
+
+    def get_queryset(self):
+        # domain = self.request.META.get('HTTP_DOMAIN', None)
+        # if domain is None:
+        #     raise Exception("Domain is missing in request header")
+        category = int(self.request.GET.get('category'))
+        order = int(self.request.GET.get('order'))
+        pagination = int(self.request.GET.get('pagiantenum'))
+        qs = models.Study.objects.all()
+        if category == 0:
+            if order == 0:
+                qs = models.Study.objects.order_by('-create_at')
+            elif order == 1:
+                qs = models.Study.objects.order_by('create_at')
+            elif order == 2:
+                qs = models.Study.objects.order_by('-update_at')
+        else:
+            if order == 0:
+                qs = models.Study.objects.filter(category=category).order_by('-create_at')
+            elif order == 1:
+                qs = models.Study.objects.filter(category=category).order_by('create_at')
+            elif order == 2:
+                qs = models.Study.objects.filter(category=category).order_by('-update_at')
+        return qs
 
     # def perform_create(self, serializer):
     #     study = self.get_object()

@@ -10,22 +10,25 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-import os
+import os, json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = os.path.dirname(BASE_DIR)
+SECRET_DIR = os.path.join(ROOT_DIR, '.secrets')
+secrets = json.load(open(os.path.join(SECRET_DIR, 'secret.json'), 'rb'))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '2$#qb-ie6@&s%k1=+4f44i+dxjs0r2f=hqph*(r4mdvqvc+p*&'
+SECRET_KEY = secrets['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = secrets['ALLOWED_HOSTS']
 
 
 # Application definition
@@ -58,10 +61,12 @@ INSTALLED_APPS = [
     'rest_auth.registration',
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
 SITE_ID = 1
 # REST_USE_JWT = True
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -151,6 +156,11 @@ SWAGGER_SETTINGS = {
 #             'type': 'basic'
 #         }
 #     },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 5, 
 }
 
 

@@ -5,7 +5,7 @@ from django.db import models
 class Study(models.Model):
     title = models.CharField(max_length=30)
     content = models.TextField(null=True, blank=True)
-    category = models.IntegerField(default=0)
+    category = models.IntegerField(default=0) # 1: dev, 2: univ, 3: others
     create_at = models.DateTimeField(auto_now=True)
     update_at = models.DateTimeField(auto_now_add=True)
     # image = models.ForeignKey(Photo, on_delete=models.PROTECT)
