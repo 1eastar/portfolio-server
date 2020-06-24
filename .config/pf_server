@@ -3,16 +3,6 @@ server {
     listen 80;
     server_name  *.1eastar.com *.elasticbeanstalk.com *.amazonaws.com localhost;
 
-    if ($http_x_forwarded_proto = 'http'){
-        return 301 https://$host$request_uri;
-    }
-
-}
-
-server {
-    listen 443;
-    server_name *.1eastar.com *.elasticbeanstalk.com *.amazonaws.com localhost;
-
     location = /favicon.ico { access_log off; log_not_found off; }
     location /health-check {
         access_log off;
@@ -29,4 +19,8 @@ server {
     location /media/ {
         alias /srv/pf_server/media/;
     }
+    if ($http_x_forwarded_proto = 'http'){
+        return 301 https://$host$request_uri;
+    }
+
 }
