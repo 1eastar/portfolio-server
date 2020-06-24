@@ -1,7 +1,7 @@
 
 server {
     listen 80;
-    server_name  *.elasticbeanstalk.com *.amazonaws.com localhost;
+    server_name  *.1eastar.com *.elasticbeanstalk.com *.amazonaws.com localhost;
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location /health-check {
