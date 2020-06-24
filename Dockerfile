@@ -30,6 +30,6 @@ RUN         ln -fs /etc/nginx/sites-available/pf_server                  /etc/ng
 
 RUN         cp -f ${PROJECT_DIR}/.config/supervisor_app.conf  /etc/supervisor/conf.d
 
-EXPOSE      443
+EXPOSE      80
 
 CMD         supervisord -n
