@@ -1,12 +1,12 @@
 {
-    "AWSEBDockerrunVersion": 2,
+    "AWSEBDockerrunVersion": "1",
     "Volumes": [],
     "containerDefinitions": [
         {
             "name": "app",
             "image": "aws_beanstalk/current-app",
             "environment": [],
-            "essential" :true,
+            "essential" :"true",
             "memory": 128,
             "mountPoints": [],
             "portMappings": [
