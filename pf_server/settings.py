@@ -59,6 +59,12 @@ INSTALLED_APPS = [
     'allauth.socialaccount',    # 소셜 계정으로 가입한 계정 관리
     'allauth.socialaccount.providers.naver',    # 어떤 소셜 서비스를 사용하는지 추가
     'rest_auth.registration',
+
+    # elb health check
+    'health_check',
+
+    # s3
+    'storages',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -173,3 +179,18 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/upload_files/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# s3
+AWS_ACCESS_KEY_ID = secrets['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = secrets['AWS_SECRET_ACCESS_KEY']
+AWS_REGION = secrets['AWS_REGION']
+
+AWS_STORAGE_BUCKET_NAME = "portfolio-server"
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1024000000 # 1GB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 1024000000
+
+DEFAULT_FILE_STORAGE = 'pf_server.storages.S3DefaultStorage'
+STATICFILES_STORAGE = 'pf_server.storages.S3StaticStorage'

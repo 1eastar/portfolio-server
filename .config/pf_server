@@ -14,10 +14,10 @@ server {
         uwsgi_pass     unix:/tmp/pf_server.sock;
     }
     location /static/ {
-        alias /srv/pf_server/staticfiles/;
+        alias https://portfolio-server.s3.ap-northeast-2.amazonaws.com/staticfiles/;
     }
     location /media/ {
-        alias /srv/pf_server/media/;
+        alias https://portfolio-server.s3.ap-northeast-2.amazonaws.com/upload_files/;
     }
     if ($http_x_forwarded_proto = 'http'){
         return 301 https://$host$request_uri;
