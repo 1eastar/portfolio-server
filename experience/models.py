@@ -1,5 +1,7 @@
 from django.db import models
 
+from colorfield.fields import ColorField
+
 # Create your models here.
 
 class Experience(models.Model):
@@ -10,6 +12,8 @@ class Experience(models.Model):
     temporary = models.BooleanField(default=False)
     create_at = models.DateTimeField(auto_now=True)
     update_at = models.DateTimeField(auto_now_add=True)
+    # main_title_color = models.CharField(max_length=10, default='')
+    main_title_color = ColorField(default='#303030')
 
     def __str__(self):
         return self.main_title

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'experience',
     'study',
 
+    'colorfield',
     'django_extensions',
     'rest_framework',
     # 'rest_framework_jwt',

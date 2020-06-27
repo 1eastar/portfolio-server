@@ -5,7 +5,7 @@ from . import models
 class PhotoTextSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.PhotoText
-        fields = ['id', 'number', 'image', 'content', 'create_at', 'update_at', 'experience']
+        fields = ['id', 'number', 'image', 'content', 'no_underline', 'vertical_mode', 'create_at', 'update_at', 'experience']
 
 
 class ExperienceSerializer(serializers.ModelSerializer):
@@ -13,7 +13,7 @@ class ExperienceSerializer(serializers.ModelSerializer):
     phototexts = serializers.SerializerMethodField()
     class Meta:
         model = models.Experience
-        fields = ('id', 'main_title', 'main_image', 'title', 'content', 'phototexts', 'temporary', 'create_at', 'update_at')
+        fields = ('id', 'main_title', 'main_title_color', 'main_image', 'title', 'content', 'phototexts', 'temporary', 'create_at', 'update_at')
 
     def get_phototexts(self, obj):
         phototexts = models.PhotoText.objects.filter(experience=obj)
