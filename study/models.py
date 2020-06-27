@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Study(models.Model):
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=80)
     content = models.TextField(null=True, blank=True)
     category = models.IntegerField(default=0) # 1: dev, 2: univ, 3: others
     create_at = models.DateTimeField(auto_now=True)
@@ -16,7 +16,7 @@ class Study(models.Model):
 
 class Photo(models.Model):
     image = models.ImageField(upload_to='image')
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
     create_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -24,7 +24,7 @@ class Photo(models.Model):
 
 class Paragraph(models.Model):
     number = models.IntegerField(default=-1) # study에서의 순서 
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=100)
     content = models.TextField()
     create_at = models.DateTimeField(auto_now=True)
 

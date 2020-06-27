@@ -3,8 +3,8 @@ from django.db import models
 # Create your models here.
 
 class Contact(models.Model):
-    writer = models.CharField(max_length=20)
-    title = models.CharField(max_length=50)
+    writer = models.CharField(max_length=30)
+    title = models.CharField(max_length=80)
     content = models.TextField()
     create_at = models.DateTimeField(auto_now=True)
     answered = models.BooleanField(default=False)
