@@ -60,11 +60,11 @@ class StudyViewSet(viewsets.ModelViewSet):
         qs = models.Study.objects.all()
         if category == 0:
             if order == 0:
-                qs = models.Study.objects.all().order_by('-create_at')
+                qs = models.Study.objects.order_by('-create_at')
             elif order == 1:
-                qs = models.Study.objects.all().order_by('create_at')
+                qs = models.Study.objects.order_by('create_at')
             elif order == 2:
-                qs = models.Study.objects.all().order_by('-update_at')
+                qs = models.Study.objects.order_by('-update_at')
         else:
             if order == 0:
                 qs = models.Study.objects.filter(category=category).order_by('-create_at')
