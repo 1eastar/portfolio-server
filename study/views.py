@@ -52,6 +52,30 @@ class StudyViewSet(viewsets.ModelViewSet):
                 qs = models.Study.objects.filter(category=category).order_by('-update_at')
         return qs
 
+    @action(detail=False, methods=['get'])
+    def allstudylist(self, request):
+        category = int(self.request.GET.get('category'))
+        order = int(self.request.GET.get('order'))
+        pagination = int(self.request.GET.get('pagiantenum'))
+        qs = models.Study.objects.all()
+        if category == 0:
+            if order == 0:
+                qs = models.Study.objects.all().order_by('-create_at')
+            elif order == 1:
+                qs = models.Study.objects.all().order_by('create_at')
+            elif order == 2:
+                qs = models.Study.objects.all().order_by('-update_at')
+        else:
+            if order == 0:
+                qs = models.Study.objects.filter(category=category).order_by('-create_at')
+            elif order == 1:
+                qs = models.Study.objects.filter(category=category).order_by('create_at')
+            elif order == 2:
+                qs = models.Study.objects.filter(category=category).order_by('-update_at')
+                
+        serializer = self.get_serializer(qs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     # def perform_create(self, serializer):
     #     study = self.get_object()
     #     paragraphs = self.request.data['paragraphs']
