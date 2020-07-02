@@ -54,26 +54,20 @@ class StudyViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def allstudylist(self, request):
-        category = int(self.request.GET.get('category'))
         order = int(self.request.GET.get('order'))
         pagination = int(self.request.GET.get('pagiantenum'))
+        search = self.request.GET.get('search')
         qs = models.Study.objects.all()
-        if category == 0:
-            if order == 0:
-                qs = models.Study.objects.order_by('-create_at')
-            elif order == 1:
-                qs = models.Study.objects.order_by('create_at')
-            elif order == 2:
-                qs = models.Study.objects.order_by('-update_at')
-        else:
-            if order == 0:
-                qs = models.Study.objects.filter(category=category).order_by('-create_at')
-            elif order == 1:
-                qs = models.Study.objects.filter(category=category).order_by('create_at')
-            elif order == 2:
-                qs = models.Study.objects.filter(category=category).order_by('-update_at')
+
+        if order == 0:
+            qs = models.Study.objects.order_by('-create_at')
+        elif order == 1:
+            qs = models.Study.objects.order_by('create_at')
+        elif order == 2:
+            qs = models.Study.objects.order_by('-update_at')
+        filtered_qs = qs.filter(title__contains=search)
                 
-        serializer = self.get_serializer(qs, many=True)
+        serializer = self.get_serializer(filtered_qs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # def perform_create(self, serializer):
