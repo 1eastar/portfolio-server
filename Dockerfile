@@ -19,7 +19,6 @@ WORKDIR     /srv/pf_server
 RUN         pip install -r requirements.txt
 RUN         python manage.py makemigrations
 RUN         python manage.py migrate
-RUN         echo "from django.contrib.auth.models import User; User.objects.filter(username='1eastar').delete(); User.objects.create_superuser('1eastar', 'ehdwls6703@gmail.com', 'h9u0m4a2n!')" | python manage.py shell
 WORKDIR     ${PROJECT_DIR}
 
 RUN         cp -f ${PROJECT_DIR}/.config/nginx.conf           /etc/nginx
